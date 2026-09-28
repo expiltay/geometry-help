@@ -43,6 +43,7 @@
   --grid:rgba(114,172,236,.06);
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:72px}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{ margin:0;
@@ -164,6 +165,24 @@ svg .sq{stroke:var(--accent);stroke-width:2;fill:none}
 .k-d{background:var(--given-soft);color:var(--given)}
 .k-p{background:var(--accent-soft);color:var(--accent)}
 .k-t{background:var(--prove-soft);color:var(--prove)}
+.vid{justify-items:stretch}
+.vid video{width:100%;aspect-ratio:16/9;border-radius:10px;border:1.5px solid var(--line);background:#000;display:block}
+.vid figcaption{text-align:left;max-width:none}
+/* table-proof practice */
+.practice select{font:inherit;font-size:15px;color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:6px;padding:4px 6px;max-width:100%}
+.practice select.from{min-width:5.5em}
+.practice select.ok{border-color:var(--prove);background:var(--prove-soft)}
+.practice select.no{border-color:var(--warn);background:var(--warn-soft)}
+.practice .fb{display:block;font-size:13px;font-weight:400;white-space:normal;margin-top:3px;max-width:22ch}
+.practice .fb.ok{color:var(--prove);font-weight:700}
+.practice .fb.no{color:var(--warn)}
+.practice td{white-space:normal !important}
+.pbtns{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.pbtns button{font:inherit;font-weight:700;font-size:15px;border-radius:999px;padding:7px 16px;cursor:pointer;border:1.5px solid var(--ink);background:var(--ink);color:var(--paper)}
+.pbtns button.reset{background:transparent;color:var(--ink);border-color:var(--line)}
+.pbtns button:focus-visible,.practice select:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.score{font-weight:700}
+.small-note{font-size:15px;color:var(--muted)}
 footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
 </style>
 </head>
@@ -182,6 +201,7 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <li><a href="#s31"><b>3.1</b> If–then</a></li>
     <li><a href="#s32"><b>3.2</b> Setting up</a></li>
     <li><a href="#s33"><b>3.3</b> Angle proofs</a></li>
+    <li><a href="#table-proofs"><b>▦</b> Table proofs</a></li>
     <li><a href="#s34"><b>3.4</b> Part–whole</a></li>
     <li><a href="#s35"><b>3.5</b> Indirect</a></li>
     <li><a href="#s36"><b>3.6</b> Two truths</a></li>
@@ -193,7 +213,7 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
 <div class="howto">
   <h4>How to use this page</h4>
   <ul>
-    <li>Read the black <b>Big idea</b> box first. If you understand that one sentence, you understand the section.</li>
+    <li>Start each section with its short <b>video</b>. Then read the black <b>Big idea</b> box. If you understand that one sentence, you understand the section.</li>
     <li>Try each worksheet question <b>before</b> opening a hint. Open hints one at a time. Each one gives away a little more.</li>
     <li>Green boxes say <b>Check your answer</b>. Open those only after you have written something down.</li>
     <li>Tick <b>Done</b> when you finish a question. This browser remembers your ticks.</li>
@@ -208,6 +228,8 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <h2>Conditional Statements</h2>
     <div class="links"><a href="https://youtu.be/F-YuEmgA25Y" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1C4eos8SGJtBahtv6ICLRK0lDGVPTeWe-/view" target="_blank" rel="noopener">3.1 worksheet (PDF)</a></div>
   </div>
+
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.1-conditional-statements.mp4"></video><figcaption>Watch first: a 3 min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
 
   <div class="big"><span class="tag">Big idea</span>Almost every rule in math can be written as <b>“If ____, then ____.”</b> The part after <i>if</i> is the <b>Given</b>. The part after <i>then</i> is the <b>Conclusion</b>.</div>
 
@@ -353,6 +375,8 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="links"><a href="https://youtu.be/qCqYSlg3IrM" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1LhD8VSZVCZnc-213PAaSUUwirkrwUAH3/view" target="_blank" rel="noopener">3.2 worksheet (PDF)</a></div>
   </div>
 
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.2-proof-structure.mp4"></video><figcaption>Watch first: a 2 min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
+
   <div class="big"><span class="tag">Big idea</span>Before you prove anything, you set it up in three steps: <b>(1)</b> write it as if–then, <b>(2)</b> draw and label a picture of the Given, <b>(3)</b> write “Given:” and “Prove:” using the labels from your picture.</div>
 
   <p>This worksheet only asks you to set up. You don't do the proof yet.</p>
@@ -426,18 +450,128 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="links"><a href="https://youtu.be/TCqOqYZg-08" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/114oGV8LFx55YeCVdT8QyZUKVeg03azE1/view" target="_blank" rel="noopener">3.3 worksheet (PDF)</a><a href="https://drive.google.com/file/d/1RgU3KYyzHyv9jtYXu0j0-VVksh_DQiYi/view" target="_blank" rel="noopener">Teacher's selected proofs (PDF)</a></div>
   </div>
 
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.3-angle-proofs.mp4"></video><figcaption>Watch first: a 3 min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
+
   <div class="big"><span class="tag">Big idea</span>A proof is a chain of small steps from the Given to the Conclusion. Every step needs a reason, and the only reasons allowed are: <b>Given</b>, a <b>definition</b>, a <b>postulate</b>, or a <b>theorem you already proved</b>.</div>
 
-  <div class="card">
-    <h4>The table (your teacher calls it a “table proof”)</h4>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>Column</th><th>What goes in it</th></tr></thead>
-      <tbody>
-        <tr><td><b>Statement</b></td><td>One small fact, written as words or as an equation.</td></tr>
-        <tr><td><b>From</b></td><td>The line number(s) this fact came from. Line 1 is the Given, so it has no “From.”</td></tr>
-        <tr><td><span class="r">Reason</span></td><td>The rule that lets you say it. For example “Def linear pair,” “LPT,” or “Substitution.”</td></tr>
-      </tbody>
-    </table></div>
+  <div class="part tp" id="table-proofs">
+    <div class="part-label">Start here if table proofs are confusing</div>
+    <h3>Table proofs from zero</h3>
+
+    <div class="card">
+      <h4>What is a table proof?</h4>
+      <p>Imagine explaining something to a friend who keeps asking <b>“How do you know?”</b> after everything you say. A table proof answers that question for every single line.</p>
+      <p>Each row of the table is <b>one small step</b>. Each row has three parts:</p>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Column</th><th>The question it answers</th><th>What you write</th></tr></thead>
+        <tbody>
+          <tr><td><b>Statement</b></td><td>What do I know now?</td><td>One small fact. Words or an equation.</td></tr>
+          <tr><td><b>From</b></td><td>Which earlier lines did I use to get it?</td><td>Line numbers, like “1” or “2, 4.” The Given line leaves this blank.</td></tr>
+          <tr><td><span class="r">Reason</span></td><td>What rule lets me say it?</td><td>“Given,” a definition, a postulate, a theorem, or an algebra step.</td></tr>
+        </tbody>
+      </table></div>
+    </div>
+
+    <div class="card">
+      <h4>Example 1: no geometry at all</h4>
+      <p><span class="g">Given:</span> Today is Saturday. &nbsp; <span class="c">Prove:</span> There is no school today.</p>
+      <div class="tbl-wrap"><table class="proof">
+        <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Today is Saturday<span class="say">We were told this. Nothing to explain.</span></td><td></td><td>Given</td></tr>
+          <tr><td>2</td><td>Today is a weekend day<span class="say">How do I know? Because of line 1 and what “weekend” means.</span></td><td>1</td><td>Def weekend</td></tr>
+          <tr><td>3</td><td>There is no school today<span class="say">How do I know? Because of line 2 and the school rule.</span></td><td>2</td><td>School rule</td></tr>
+        </tbody>
+      </table></div>
+      <p>That's all a table proof is. Every line points back to earlier lines (<b>From</b>) and names the rule it used (<b>Reason</b>). The last line is the thing you wanted to prove.</p>
+    </div>
+
+    <div class="card">
+      <h4>Example 2: an easy geometry one</h4>
+      <p><span class="g">Given:</span> ∠1 and ∠2 are supplementary, and m∠1 = 70°. &nbsp; <span class="c">Prove:</span> m∠2 = 110°.</p>
+      <div class="tbl-wrap"><table class="proof">
+        <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>∠1 and ∠2 are supplementary; m∠1 = 70°<span class="say">Copy the Given. It always goes first.</span></td><td></td><td>Given</td></tr>
+          <tr><td>2</td><td>m∠1 + m∠2 = 180°<span class="say">“Supplementary” means they add to 180°. I used line 1.</span></td><td>1</td><td>Def supplementary</td></tr>
+          <tr><td>3</td><td>70° + m∠2 = 180°<span class="say">I put 70° in place of m∠1. I needed line 1 (m∠1 = 70°) and line 2 (the equation), so From is “1, 2.”</span></td><td>1, 2</td><td>Substitution</td></tr>
+          <tr><td>4</td><td>m∠2 = 110°<span class="say">Take 70° away from both sides.</span></td><td>3</td><td>Subtraction</td></tr>
+        </tbody>
+      </table></div>
+      <p>Look at line 3. It uses <b>two</b> earlier lines, so the From column says <b>1, 2</b>. That's the only tricky part of From: list every line you looked at.</p>
+    </div>
+
+    <div class="card">
+      <h4>How to pick the Reason: ask these questions in order</h4>
+      <ol class="steps">
+        <li><b>Did the problem just tell me this?</b> Write <span class="r">Given</span>.</li>
+        <li><b>Did I use what a word means</b> (supplementary, midpoint, linear pair, right angle…)? Write <span class="r">Def ___</span>, filling in the word.</li>
+        <li><b>Did I use one of the “always true” rules</b> (Segment Addition, Angle Addition, Straight Angle)? Write the <span class="r">postulate's name</span>.</li>
+        <li><b>Did I use a theorem we already proved</b> (LPT, VAT, SST…)? Write the <span class="r">theorem's name</span>.</li>
+        <li><b>Did I just do algebra?</b>
+          <ul class="plain">
+            <li>Put one thing in place of something equal to it → <span class="r">Substitution</span></li>
+            <li>a = b and b = c, so a = c → <span class="r">Transitivity</span></li>
+            <li>Added, subtracted, multiplied, or divided both sides → <span class="r">Addition</span>, <span class="r">Subtraction</span>, <span class="r">Multiplication</span>, <span class="r">Division</span></li>
+          </ul>
+        </li>
+      </ol>
+      <p>The <a href="#cheat">Reasons list</a> at the bottom of this page has every definition, postulate, and theorem you can use.</p>
+    </div>
+
+    <div class="card">
+      <h4>How to plan a proof before writing it</h4>
+      <p>Don't start at line 1 and hope. Plan from <b>both ends</b>.</p>
+      <ol class="steps">
+        <li>Write the Given as line 1.</li>
+        <li>Write the Prove at the <b>bottom</b> of your scratch paper. That will be your last line.</li>
+        <li>Look at the last line and ask: <b>“What would I need to know just before this?”</b> In Example 2, to get m∠2 = 110°, I need an equation with m∠2 in it, like 70° + m∠2 = 180°.</li>
+        <li>Keep asking that question, working upward, until you reach something that comes straight from the Given.</li>
+        <li>Now copy the steps into the table from top to bottom, and fill in From and Reason.</li>
+      </ol>
+    </div>
+
+    <div class="warn"><b>Common mistakes:</b>
+      <ul class="plain" style="margin-top:6px">
+        <li><b>Big jumps.</b> Each line should be one small step. If you can't name one rule for a line, split it into two lines.</li>
+        <li><b>“Because the picture shows it.”</b> A diagram is never a reason. Angles that <i>look</i> equal aren't proof.</li>
+        <li><b>Using what you're trying to prove.</b> The Prove statement can only appear as your <i>last</i> line.</li>
+        <li><b>Using a theorem too early.</b> You can only use a theorem after it has been proven in class. Check the order in the Reasons list.</li>
+        <li><b>Empty From.</b> Every line except the Given needs line numbers in From.</li>
+      </ul>
+    </div>
+
+    <div class="card practice" data-practice="p1">
+      <h4>Practice 1: pick the Reason for each line</h4>
+      <p><span class="g">Given:</span> ∠A and ∠B are complementary, and m∠A = 35°. &nbsp; <span class="c">Prove:</span> m∠B = 55°.</p>
+      <div class="tbl-wrap"><table class="proof">
+        <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>∠A and ∠B are complementary; m∠A = 35°</td><td></td><td><select id="p1r1" data-ans="Given" aria-label="Reason for line 1"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>2</td><td>m∠A + m∠B = 90°</td><td>1</td><td><select id="p1r2" data-ans="Def complementary" data-hint="What word in line 1 did you use? What does it mean?" aria-label="Reason for line 2"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>3</td><td>35° + m∠B = 90°</td><td>1, 2</td><td><select id="p1r3" data-ans="Substitution" data-hint="You put 35° in place of m∠A." aria-label="Reason for line 3"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>4</td><td>m∠B = 55°</td><td>3</td><td><select id="p1r4" data-ans="Subtraction" data-hint="What did you do to both sides to get m∠B alone?" aria-label="Reason for line 4"></select><span class="fb" aria-live="polite"></span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="pbtns"><button type="button" class="check">Check my answers</button><button type="button" class="reset">Start over</button><span class="score" aria-live="polite"></span></div>
+    </div>
+
+    <div class="card practice" data-practice="p2">
+      <h4>Practice 2: now fill in From <i>and</i> Reason</h4>
+      <p><span class="g">Given:</span> ∠1 and ∠2 form a linear pair, and m∠1 = 120°. &nbsp; <span class="c">Prove:</span> m∠2 = 60°.</p>
+      <div class="tbl-wrap"><table class="proof">
+        <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>∠1 and ∠2 form a linear pair; m∠1 = 120°</td><td></td><td>Given</td></tr>
+          <tr><td>2</td><td>∠1 and ∠2 are supplementary</td><td><select id="p2f2" class="from" data-ans="1" data-hint="Which line tells you they form a linear pair?" aria-label="From for line 2"></select><span class="fb" aria-live="polite"></span></td><td><select id="p2r2" data-ans="LPT" data-hint="Which theorem says linear pairs are supplementary?" aria-label="Reason for line 2"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>3</td><td>m∠1 + m∠2 = 180°</td><td><select id="p2f3" class="from" data-ans="2" data-hint="Which line says “supplementary”?" aria-label="From for line 3"></select><span class="fb" aria-live="polite"></span></td><td><select id="p2r3" data-ans="Def supplementary" data-hint="You turned a word into an equation." aria-label="Reason for line 3"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>4</td><td>120° + m∠2 = 180°</td><td><select id="p2f4" class="from" data-ans="1, 3" data-hint="You needed the 120° from one line and the equation from another." aria-label="From for line 4"></select><span class="fb" aria-live="polite"></span></td><td><select id="p2r4" data-ans="Substitution" data-hint="You put 120° in place of m∠1." aria-label="Reason for line 4"></select><span class="fb" aria-live="polite"></span></td></tr>
+          <tr><td>5</td><td>m∠2 = 60°</td><td><select id="p2f5" class="from" data-ans="4" data-hint="Which equation did you solve?" aria-label="From for line 5"></select><span class="fb" aria-live="polite"></span></td><td><select id="p2r5" data-ans="Subtraction" data-hint="What did you do to both sides?" aria-label="Reason for line 5"></select><span class="fb" aria-live="polite"></span></td></tr>
+        </tbody>
+      </table></div>
+      <div class="pbtns"><button type="button" class="check">Check my answers</button><button type="button" class="reset">Start over</button><span class="score" aria-live="polite"></span></div>
+      <p class="small-note">Did you notice? This is the Linear Pairs Theorem (LPT) being <b>used</b> as a Reason. Once a theorem is proven, it becomes a tool for later proofs.</p>
+    </div>
   </div>
 
   <div class="card">
@@ -587,6 +721,8 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="links"><a href="https://youtu.be/5FfvXPA-Gcs" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/10BrqdrbPwQZHafaSXzlGBx5ckQFYS594/view" target="_blank" rel="noopener">3.4 worksheet (PDF)</a></div>
   </div>
 
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.4-part-whole-proofs.mp4"></video><figcaption>Watch first: a 2½ min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
+
   <div class="big"><span class="tag">Big idea</span>The pieces add up to the whole. Write the “pieces add up” equation using the <b>Segment Addition Postulate</b> or the <b>Angle Addition Postulate</b>, then finish with ordinary algebra.</div>
 
   <figure><svg viewBox="0 0 320 90" width="320" role="img" aria-label="Segment AB with point C between">
@@ -694,6 +830,8 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <div class="links"><a href="https://youtu.be/eQBYW2AJaTA" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1BECoEnZK8AwswBDZPx65KBOKhJycwN66/view" target="_blank" rel="noopener">3.5 worksheet (PDF)</a></div>
   </div>
 
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.5-indirect-proof.mp4"></video><figcaption>Watch first: a 2 min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
+
   <div class="big"><span class="tag">Big idea</span>Pretend the <b>opposite</b> of what you want is true. Show that this leads to something impossible. So the opposite must be false, and what you wanted is true.</div>
 
   <div class="card">
@@ -794,6 +932,8 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     <h2>Two Truths and a Lie</h2>
     <div class="links"><a href="https://drive.google.com/file/d/12-C-3XPCTATTMjHMm7Aj3K_c7EiL7gIC/view" target="_blank" rel="noopener">3.6 worksheet (PDF)</a><a href="https://www.geogebra.org/geometry" target="_blank" rel="noopener">GeoGebra Geometry (free)</a></div>
   </div>
+
+  <figure class="vid"><video controls preload="metadata" playsinline src="videos/3.6-two-truths-and-a-lie.mp4"></video><figcaption>Watch first: a 2 min video lesson with captions. Then read below and try the worksheet.</figcaption></figure>
 
   <div class="big"><span class="tag">Big idea</span>This is counterexample hunting (from 3.1) with a computer. Build the <b>Given</b> in GeoGebra so it can't break, then drag points around until the <b>Conclusion</b> fails. That picture is your counterexample.</div>
 
@@ -915,6 +1055,36 @@ footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid va
     b.addEventListener('change', function(){
       saved[b.dataset.k] = b.checked;
       try { localStorage.setItem('ch3-done', JSON.stringify(saved)); } catch(e) {}
+    });
+  });
+})();
+</script>
+<script>
+(function(){
+  var REASONS = ['Given','Def supplementary','Def complementary','Def linear pair','Def right angle','Def midpoint','Angle Addition Postulate','Straight Angle Postulate','LPT','VAT','Substitution','Transitivity','Addition','Subtraction','Division'];
+  var FROMS = ['1','2','3','4','1, 2','1, 3','2, 3'];
+  document.querySelectorAll('.practice').forEach(function(card){
+    var sels = card.querySelectorAll('select');
+    sels.forEach(function(s){
+      var opts = s.classList.contains('from') ? FROMS : REASONS;
+      var o = document.createElement('option'); o.value=''; o.textContent = s.classList.contains('from') ? 'pick…' : 'pick a reason…'; s.appendChild(o);
+      opts.forEach(function(v){ var e=document.createElement('option'); e.value=v; e.textContent=v; s.appendChild(e); });
+      s.addEventListener('change', function(){ s.classList.remove('ok','no'); var fb=s.nextElementSibling; fb.textContent=''; fb.className='fb'; });
+    });
+    card.querySelector('.check').addEventListener('click', function(){
+      var right=0;
+      sels.forEach(function(s){
+        var fb=s.nextElementSibling, ok = s.value === s.dataset.ans;
+        s.classList.remove('ok','no'); s.classList.add(ok?'ok':'no');
+        fb.className = 'fb ' + (ok?'ok':'no');
+        fb.textContent = ok ? '✓ Correct' : (s.value ? 'Not quite. ' : 'Pick one. ') + (s.dataset.hint || '');
+        if (ok) right++;
+      });
+      card.querySelector('.score').textContent = right === sels.length ? 'All correct! 🎉' : right + ' of ' + sels.length + ' correct. Read the hints and try again.';
+    });
+    card.querySelector('.reset').addEventListener('click', function(){
+      sels.forEach(function(s){ s.value=''; s.classList.remove('ok','no'); var fb=s.nextElementSibling; fb.textContent=''; fb.className='fb'; });
+      card.querySelector('.score').textContent='';
     });
   });
 })();
