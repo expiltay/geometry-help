@@ -1,0 +1,923 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Chapter 3 Proof Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<style>
+:root{
+  --paper:#f4f7fb; --card:#ffffff; --ink:#17243a; --muted:#56637a; --line:#d5dce7;
+  --accent:#c4531c; --accent-soft:#fbe9df;
+  --given:#2b69aa; --given-soft:#e3eefa;
+  --prove:#23845a; --prove-soft:#e0f3ea;
+  --warn:#b0271c; --warn-soft:#fbe6e3;
+  --hint:#fff6e6; --hint-line:#ecd3a4;
+  --grid:rgba(43,105,170,.07);
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0e1520; --card:#162030; --ink:#e6ecf5; --muted:#9ba8bc; --line:#2a3850;
+    --accent:#f08d52; --accent-soft:#3a2418;
+    --given:#72acec; --given-soft:#17304c;
+    --prove:#5fca95; --prove-soft:#143628;
+    --warn:#ff8a7e; --warn-soft:#3d1b18;
+    --hint:#241e14; --hint-line:#5a4726;
+    --grid:rgba(114,172,236,.06);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0e1520; --card:#162030; --ink:#e6ecf5; --muted:#9ba8bc; --line:#2a3850;
+  --accent:#f08d52; --accent-soft:#3a2418;
+  --given:#72acec; --given-soft:#17304c;
+  --prove:#5fca95; --prove-soft:#143628;
+  --warn:#ff8a7e; --warn-soft:#3d1b18;
+  --hint:#241e14; --hint-line:#5a4726;
+  --grid:rgba(114,172,236,.06);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{ margin:0;
+  background:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.6;
+  padding-inline:16px; padding-block:0 64px;
+}
+.wrap{max-width:820px;margin:0 auto}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.2;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--given)}
+a:focus-visible,summary:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* header + nav */
+header.top{padding-block:40px 20px;display:grid;gap:12px}
+.eyebrow{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+h1{font-size:clamp(32px,6vw,48px);font-weight:800}
+.lede{color:var(--muted);max-width:62ch}
+nav.sections{
+  position:sticky; top:env(safe-area-inset-top,0px); z-index:5;
+  background:var(--paper); border-bottom:1px solid var(--line);
+  margin-inline:-16px; padding:10px 16px;
+}
+nav.sections ol{list-style:none;margin:0 auto;padding:0;display:flex;gap:8px;overflow-x:auto;max-width:820px;scrollbar-width:none}
+nav.sections a{
+  display:block;white-space:nowrap;text-decoration:none;color:var(--ink);
+  border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-size:15px;font-weight:700
+}
+nav.sections a:hover{border-color:var(--accent)}
+nav.sections a b{color:var(--accent)}
+
+/* how-to-use */
+.howto{margin-top:24px;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:18px 20px;display:grid;gap:8px}
+.howto ul{margin:0;padding-left:20px;display:grid;gap:4px}
+
+/* sections */
+section.chap{margin-top:56px;display:grid;gap:22px}
+.chap-head{display:grid;gap:6px;border-top:3px solid var(--ink);padding-top:14px}
+.chap-num{font-family:var(--display);font-weight:800;color:var(--accent);font-size:18px}
+h2{font-size:clamp(26px,4.5vw,34px);font-weight:800}
+.links{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:15px}
+h3{font-size:22px;font-weight:600;margin-top:10px}
+h4{font-size:18px;font-weight:600}
+.part{display:grid;gap:12px}
+.part-label{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+
+.big{background:var(--ink);color:var(--paper);border-radius:10px;padding:18px 20px;font-size:19px;display:grid;gap:6px}
+.big .tag{font-size:12px;letter-spacing:.1em;text-transform:uppercase;opacity:.75;font-weight:700}
+
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:16px 18px;display:grid;gap:10px}
+.steps{margin:0;padding-left:22px;display:grid;gap:6px}
+.steps li::marker{font-weight:700;color:var(--accent)}
+ul.plain{margin:0;padding-left:20px;display:grid;gap:4px}
+
+.warn{background:var(--warn-soft);border-left:4px solid var(--warn);padding:12px 16px;border-radius:0 8px 8px 0}
+.warn b:first-child{color:var(--warn)}
+
+.g{background:var(--given-soft);color:var(--given);font-weight:700;padding:0 5px;border-radius:4px}
+.c{background:var(--prove-soft);color:var(--prove);font-weight:700;padding:0 5px;border-radius:4px}
+.r{background:var(--accent-soft);color:var(--accent);font-weight:700;padding:0 5px;border-radius:4px}
+.ifthen{font-size:18px;line-height:1.9}
+.ex{display:grid;gap:4px;padding:10px 0;border-bottom:1px dashed var(--line)}
+.ex:last-child{border-bottom:0}
+.ex .from{color:var(--muted);font-size:15px}
+
+/* translation table */
+.tbl-wrap{overflow-x:auto;border:1.5px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:16px}
+th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--paper)}
+table.proof td:first-child{font-variant-numeric:tabular-nums;color:var(--muted);width:2.2em}
+table.proof td:nth-child(3){white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--muted)}
+table.proof td:nth-child(4){color:var(--accent);font-weight:700}
+table.proof tr.why td{border-bottom:1px solid var(--line)}
+.say{display:block;font-size:14px;color:var(--muted);font-weight:400;font-style:italic;margin-top:2px}
+
+/* hints */
+details.hint{background:var(--hint);border:1.5px solid var(--hint-line);border-radius:8px}
+details.hint > summary{cursor:pointer;padding:9px 14px;font-weight:700;list-style:none;display:flex;gap:8px;align-items:baseline}
+details.hint > summary::-webkit-details-marker{display:none}
+details.hint > summary::before{content:"+";color:var(--accent);font-weight:800;width:1ch}
+details.hint[open] > summary::before{content:"−"}
+details.hint > div{padding:0 14px 12px 32px;display:grid;gap:8px}
+details.answer{background:var(--prove-soft);border-color:transparent}
+details.answer > summary::before{color:var(--prove)}
+
+.q{display:grid;gap:8px;padding:14px 0;border-top:1px solid var(--line)}
+.q:first-of-type{border-top:0}
+.q-title{font-weight:700;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.q-title .n{font-family:var(--display);color:var(--accent);font-weight:800}
+.done{display:inline-flex;gap:6px;align-items:center;font-size:14px;color:var(--muted);font-weight:400;margin-left:auto;cursor:pointer}
+.done input{width:17px;height:17px;accent-color:var(--prove)}
+
+figure{margin:0;display:grid;gap:6px;justify-items:center}
+figure svg{max-width:100%;height:auto;color:var(--ink)}
+figcaption{font-size:14px;color:var(--muted);text-align:center;max-width:52ch}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+svg .ln{stroke:currentColor;stroke-width:2.2;fill:none;stroke-linecap:round}
+svg .arc{stroke:var(--accent);stroke-width:2;fill:none}
+svg .arc2{stroke:var(--given);stroke-width:2;fill:none}
+svg .pt{fill:currentColor}
+svg text{fill:currentColor;font-family:var(--body);font-size:15px}
+svg text.a{fill:var(--accent);font-weight:700}
+svg text.b{fill:var(--given);font-weight:700}
+svg .sq{stroke:var(--accent);stroke-width:2;fill:none}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;counter-reset:f}
+.flow div{background:var(--card);border:1.5px solid var(--line);border-radius:8px;padding:10px 12px;font-size:15px;display:grid;gap:2px}
+.flow b{font-family:var(--display)}
+
+.cheat{display:grid;gap:14px}
+.cheat dl{margin:0;display:grid;gap:8px}
+.cheat dt{font-weight:700}
+.cheat dd{margin:0 0 0 0;color:var(--muted)}
+.cheat .kind{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:4px;padding:1px 6px;margin-right:6px;vertical-align:1px}
+.k-d{background:var(--given-soft);color:var(--given)}
+.k-p{background:var(--accent-soft);color:var(--accent)}
+.k-t{background:var(--prove-soft);color:var(--prove)}
+footer{margin-top:56px;color:var(--muted);font-size:14px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header class="top">
+  <div class="eyebrow">Think Logical! Geometry · Chapter 3</div>
+  <h1>Chapter 3 Proof Guide</h1>
+  <p class="lede">A plain-language helper for sections 3.1 to 3.6. Each part explains one idea, shows an example that is <em>like</em> the worksheet problems, and then gives hints for each worksheet question. It uses the same names and the same proof layout your teacher uses.</p>
+</header>
+</div>
+
+<nav class="sections" aria-label="Sections">
+  <ol>
+    <li><a href="#s31"><b>3.1</b> If–then</a></li>
+    <li><a href="#s32"><b>3.2</b> Setting up</a></li>
+    <li><a href="#s33"><b>3.3</b> Angle proofs</a></li>
+    <li><a href="#s34"><b>3.4</b> Part–whole</a></li>
+    <li><a href="#s35"><b>3.5</b> Indirect</a></li>
+    <li><a href="#s36"><b>3.6</b> Two truths</a></li>
+    <li><a href="#cheat"><b>★</b> Reasons list</a></li>
+  </ol>
+</nav>
+
+<div class="wrap">
+<div class="howto">
+  <h4>How to use this page</h4>
+  <ul>
+    <li>Read the black <b>Big idea</b> box first. If you understand that one sentence, you understand the section.</li>
+    <li>Try each worksheet question <b>before</b> opening a hint. Open hints one at a time. Each one gives away a little more.</li>
+    <li>Green boxes say <b>Check your answer</b>. Open those only after you have written something down.</li>
+    <li>Tick <b>Done</b> when you finish a question. This browser remembers your ticks.</li>
+    <li>Stuck on what to write in the <span class="r">Reason</span> column? Use the <a href="#cheat">Reasons list</a> at the bottom.</li>
+  </ul>
+</div>
+
+<!-- ============================ 3.1 ============================ -->
+<section class="chap" id="s31">
+  <div class="chap-head">
+    <div class="chap-num">3.1</div>
+    <h2>Conditional Statements</h2>
+    <div class="links"><a href="https://youtu.be/F-YuEmgA25Y" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1C4eos8SGJtBahtv6ICLRK0lDGVPTeWe-/view" target="_blank" rel="noopener">3.1 worksheet (PDF)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>Almost every rule in math can be written as <b>“If ____, then ____.”</b> The part after <i>if</i> is the <b>Given</b>. The part after <i>then</i> is the <b>Conclusion</b>.</div>
+
+  <div class="card">
+    <p class="ifthen">If <span class="g">two angles form a linear pair</span>, then <span class="c">they are supplementary</span>.</p>
+    <p><span class="g">Given</span> = what you start with (after “if”). &nbsp; <span class="c">Conclusion</span> = what must follow (after “then”).</p>
+    <p>Think of it as a promise: <i>“Whenever the Given happens, the Conclusion happens too.”</i></p>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part I</div>
+    <h3>Turning a sentence into if–then form</h3>
+    <p>Many sentences are secret if–then statements. Your teacher calls these <i>implicit conditionals</i>. Find the pattern, then rewrite it.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>If the sentence looks like…</th><th>Rewrite it as…</th><th>Example (not from the worksheet)</th></tr></thead>
+      <tbody>
+        <tr><td>A, therefore B</td><td>If A, then B.</td><td>“It rained, therefore the grass is wet” → If it rained, then the grass is wet.</td></tr>
+        <tr><td>All X are Y<br>Every X is Y<br>Xs are Y</td><td>If something is an X, then it is a Y.</td><td>“All squares are rectangles” → If a shape is a square, then it is a rectangle.</td></tr>
+        <tr><td>No X is Y<br>None of the X are Y</td><td>If something is an X, then it is <b>not</b> a Y.</td><td>“No triangle has four sides” → If a shape is a triangle, then it does not have four sides.</td></tr>
+        <tr><td>When A, B<br>Whenever A, B</td><td>If A, then B.</td><td>“When I bake, the kitchen gets messy” → If I bake, then the kitchen gets messy.</td></tr>
+        <tr><td>The ___ of A is B</td><td>If you have A, then its ___ is B.</td><td>“The midpoint of a segment splits it in half” → If a point is the midpoint of a segment, then it splits the segment in half.</td></tr>
+      </tbody>
+    </table></div>
+    <div class="warn"><b>Watch out:</b> the Given is the <i>type of thing</i> or the <i>situation</i>. The Conclusion is <i>what is claimed about it</i>. In “All humans are mammals,” being human is the Given. Being a mammal is the Conclusion. Don't flip them.</div>
+    <p>Your teacher's rule: <b>even false sentences are still conditionals.</b> In Part I you just rewrite. You don't judge true or false yet.</p>
+
+    <div class="q"><div class="q-title"><span class="n">I.1–2</span> “I am, therefore I think” / “I think, therefore I am” <label class="done"><input type="checkbox" data-k="31-I12"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Use the “A, therefore B” pattern. Whatever comes before “therefore” goes after “if.”</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">I.3–4</span> “All humans are mammals” / “Every mammal is a vertebrate” <label class="done"><input type="checkbox" data-k="31-I34"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Use “If an animal is a ___, then it is a ___.” The first noun in the sentence goes in the Given.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">I.5–6</span> “No prime is even” / “None of the powers of 4 are prime” <label class="done"><input type="checkbox" data-k="31-I56"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Use the “No X is Y” pattern: If a number is ___, then it is <b>not</b> ___.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">I.7–9</span> Line intersection, angle made of rays, hiking <label class="done"><input type="checkbox" data-k="31-I79"> Done</label></div>
+      <details class="hint"><summary>Hint for 7 and 8</summary><div><p>Ask “what situation are we talking about?” For 7 the situation is <i>two lines intersect</i>. For 8 the situation is <i>a figure is an angle</i>.</p></div></details>
+      <details class="hint"><summary>Hint for 9</summary><div><p>“When A, B” becomes “If A, then B.” The word “always” can be dropped, because “if…then” already means always.</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part II</div>
+    <h3>True or false? Find a counterexample</h3>
+    <p>An if–then statement is <b>true</b> only if it works <b>every single time</b>. To show it is <b>false</b>, you need just <b>one</b> example that breaks it. That example is called a <b>counterexample</b>.</p>
+    <div class="card">
+      <h4>A counterexample must do two things at once</h4>
+      <ol class="steps">
+        <li>It makes the <span class="g">Given</span> <b>true</b>.</li>
+        <li>It makes the <span class="c">Conclusion</span> <b>false</b>.</li>
+      </ol>
+      <div class="ex"><p><b>Example:</b> “If a number is odd, then it is prime.”</p>
+        <p>Try 9. Is 9 odd? <b>Yes</b> (Given true). Is 9 prime? <b>No</b>, 9 = 3 × 3 (Conclusion false). So the statement is <b>false</b>, and 9 is a counterexample.</p></div>
+      <div class="ex"><p><b>Example:</b> “If two numbers are even, then their sum is even.”</p>
+        <p>Every even + even is even. No counterexample exists, so it is <b>true</b>.</p></div>
+    </div>
+    <div class="warn"><b>Common mistake:</b> a number that makes the Given false is <i>not</i> a counterexample. For “if a number is odd, then it is prime,” the number 4 proves nothing, because 4 isn't odd.</div>
+    <div class="card">
+      <h4>Words from the worksheet</h4>
+      <ul class="plain">
+        <li><b>Prime:</b> a positive whole number with exactly two factors (1 and itself). The primes are 2, 3, 5, 7, 11, 13… <b>2 is prime</b>, and it's the only even prime. This matters a lot!</li>
+        <li><b>Perfect square:</b> 1, 4, 9, 16, 25, 36… (a whole number times itself). 1 counts.</li>
+        <li><b>Supplementary:</b> two angles whose measures add to 180°. They do <i>not</i> have to touch.</li>
+        <li><b>Linear pair:</b> two angles that sit side by side and whose outer sides make a straight line.</li>
+      </ul>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">II.1–2</span> Sums of primes <label class="done"><input type="checkbox" data-k="31-II12"> Done</label></div>
+      <details class="hint"><summary>Hint 1</summary><div><p>Write it as “If two primes are added, then the sum is not prime.” Now go hunting: add small primes and see if you ever get a prime.</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>For #1, try using the prime 2. For #2, the primes must be <i>odd</i>. What do you always get when you add two odd numbers? Can that kind of number (bigger than 2) be prime?</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>#1 is <b>false</b>. One counterexample is 2 + 3 = 5 (your teacher's). #2 is <b>true</b>: odd + odd is even, and an even number bigger than 2 is never prime.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">II.3–4</span> Perfect squares <label class="done"><input type="checkbox" data-k="31-II34"> Done</label></div>
+      <details class="hint"><summary>Hint for 3</summary><div><p>Look for a perfect square that equals two other perfect squares added together. Try 25 and the squares below it: 1, 4, 9, 16.</p></div></details>
+      <details class="hint"><summary>Hint for 4</summary><div><p>“Every perfect square can be made by adding perfect squares.” Test the <b>smallest</b> perfect square. Can you make it by adding two or more perfect squares? (The smallest perfect square is 1.)</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">II.5–6</span> Linear pairs and supplementary pairs <label class="done"><input type="checkbox" data-k="31-II56"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>#5: two angles that make a straight line always add to 180°. #6 flips it around. Can you draw two angles that add to 180° but <b>don't touch each other</b>? Picture two separate right angles far apart.</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part III</div>
+    <h3>Converses: swap the two halves</h3>
+    <div class="card">
+      <p class="ifthen">Original: If <span class="g">A</span>, then <span class="c">B</span>.<br>Converse: If <span class="c">B</span>, then <span class="g">A</span>.</p>
+      <div class="ex"><p><b>Example:</b> Original: If a shape is a square, then it has four sides. <b>True.</b></p>
+        <p>Converse: If a shape has four sides, then it is a square. <b>False.</b> A rectangle that is not a square is a counterexample.</p></div>
+      <p><b>The lesson your teacher wants you to remember:</b> a true statement can have a false converse. You have to check each one by itself.</p>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">III.1</span> If x² = 1, then x = 1 <label class="done"><input type="checkbox" data-k="31-III1"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Is there another number whose square is 1? Think negative.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">III.2</span> If x = y, then |x| = |y| <label class="done"><input type="checkbox" data-k="31-III2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>|x| means “distance from zero,” so |−3| = 3. For the converse, can two <i>different</i> numbers have the same absolute value?</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">III.3</span> If two angles are complementary, then each is acute <label class="done"><input type="checkbox" data-k="31-III3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Complementary means they add to 90°, and every angle is bigger than 0°. Could either one be 90° or more? For the converse, pick two acute angles like 30° and 40°. Do they add to 90°?</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">III.4–5</span> Right angle and 90°; even and not prime <label class="done"><input type="checkbox" data-k="31-III45"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>#4: “right angle” is <i>defined</i> as an angle that measures 90°. A definition works in both directions. #5: remember 2. For its converse, is every non-prime number even? Try 9.</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part IV</div>
+    <h3>Contrapositives: swap <i>and</i> say “not”</h3>
+    <div class="card">
+      <p class="ifthen">Original: If <span class="g">A</span>, then <span class="c">B</span>.<br>Contrapositive: If <span class="c">not B</span>, then <span class="g">not A</span>.</p>
+      <div class="ex"><p><b>Example:</b> If an animal is a dog, then it is a mammal.</p>
+        <p>Contrapositive: If an animal is <b>not</b> a mammal, then it is <b>not</b> a dog.</p></div>
+      <p><b>Magic fact:</b> a statement and its contrapositive are <b>always both true or both false</b>. So for each worksheet question, you write one truth value for both.</p>
+    </div>
+    <div class="card">
+      <h4>How to say “not” correctly</h4>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Statement</th><th>Its “not” (negation)</th></tr></thead>
+        <tbody>
+          <tr><td>Q lies on line PR</td><td>Q does not lie on line PR</td></tr>
+          <tr><td>PQ = QR</td><td>PQ ≠ QR</td></tr>
+          <tr><td>A <b>and</b> B are both true</td><td>A is false <b>or</b> B is false (or both)</td></tr>
+          <tr><td>p is not greater than q</td><td>p is greater than q (two “nots” cancel)</td></tr>
+        </tbody>
+      </table></div>
+      <p>The tricky one is <b>and</b>. To break “A and B,” only one part has to fail. Your teacher did this in the worked example: the contrapositive of “If a = b and b = c, then a = c” is “If a ≠ c, then a ≠ b or b ≠ c (or both).”</p>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">IV.1–3</span> Points P, Q, R <label class="done"><input type="checkbox" data-k="31-IV13"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Draw a line with P and R on it. Try putting Q in different places: between them, off to the right past R, exactly in the middle, a little closer to P. Does the original statement always work?</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">IV.4</span> Q on line PR and PQ = QR <label class="done"><input type="checkbox" data-k="31-IV4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>The Given has an <b>and</b> in it. When you negate it, use <b>or</b>: “Q is not on line PR <b>or</b> PQ ≠ QR.”</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">IV.6</span> p not greater than q <label class="done"><input type="checkbox" data-k="31-IV6"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Are there only two choices, bigger or smaller? What if p and q are the <b>same</b> number?</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3.2 ============================ -->
+<section class="chap" id="s32">
+  <div class="chap-head">
+    <div class="chap-num">3.2</div>
+    <h2>Proof Structure (Setting Up a Proof)</h2>
+    <div class="links"><a href="https://youtu.be/qCqYSlg3IrM" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1LhD8VSZVCZnc-213PAaSUUwirkrwUAH3/view" target="_blank" rel="noopener">3.2 worksheet (PDF)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>Before you prove anything, you set it up in three steps: <b>(1)</b> write it as if–then, <b>(2)</b> draw and label a picture of the Given, <b>(3)</b> write “Given:” and “Prove:” using the labels from your picture.</div>
+
+  <p>This worksheet only asks you to set up. You don't do the proof yet.</p>
+
+  <div class="card">
+    <h4>Worked example (not on the worksheet)</h4>
+    <p><b>Statement:</b> “The angles of a triangle add up to 180°.”</p>
+    <ol class="steps">
+      <li><b>If–then:</b> If a figure is a triangle, then the sum of its angle measures is 180°.</li>
+      <li><b>Diagram:</b> draw <i>one specific</i> triangle and name its corners A, B, C.
+        <figure><svg viewBox="0 0 260 150" width="260" role="img" aria-label="Triangle ABC">
+          <path class="ln" d="M30 125 L230 125 L95 25 Z"/>
+          <circle class="pt" cx="30" cy="125" r="3.5"/><circle class="pt" cx="230" cy="125" r="3.5"/><circle class="pt" cx="95" cy="25" r="3.5"/>
+          <text x="12" y="140">A</text><text x="236" y="140">B</text><text x="88" y="18">C</text>
+        </svg></figure></li>
+      <li><span class="g">Given:</span> triangle ABC<br><span class="c">Prove:</span> m∠A + m∠B + m∠C = 180°</li>
+    </ol>
+    <p>See how the Given and Prove use the letters from the picture? That's what “be specific” means.</p>
+  </div>
+
+  <div class="card">
+    <h4>Your teacher's model (worksheet #1)</h4>
+    <div class="figs">
+      <figure><svg viewBox="0 0 240 170" width="240" role="img" aria-label="Perpendicular lines m and n with angles 1 to 4">
+        <line class="ln" x1="20" y1="100" x2="225" y2="80"/><line class="ln" x1="127.3" y1="164.9" x2="112.7" y2="15.6"/>
+        <path class="sq" d="M131.9 89.1 L130.8 77.2 L118.8 78.3"/>
+        <circle class="pt" cx="120" cy="90.2" r="3.5"/>
+        <text class="a" x="138" y="72">1</text><text class="a" x="94" y="80">2</text><text class="a" x="98" y="118">3</text><text class="a" x="132" y="118">4</text>
+        <text x="215" y="72">m</text><text x="96" y="24">n</text>
+      </svg><figcaption>Lines m and n. Angle 1 has the little square, meaning it's a right angle.</figcaption></figure>
+      <div style="display:grid;gap:6px;align-content:center">
+        <p><b>If–then:</b> If two lines are perpendicular, then they form four right angles.</p>
+        <p><span class="g">Given:</span> Lines m and n are perpendicular with angle 1 right.</p>
+        <p><span class="c">Conclusion:</span> Angles 2, 3 and 4 are also right.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn"><b>Two rules for the diagram:</b> draw only what the Given tells you (don't mark things you are supposed to prove), and give every point, line, or angle you mention a name.</div>
+
+  <div class="part">
+    <div class="part-label">Worksheet questions</div>
+    <div class="q"><div class="q-title"><span class="n">#2</span> Vertical angles are equal in measure <label class="done"><input type="checkbox" data-k="32-2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Draw two lines crossing like an X. Vertical angles are the two angles <b>across</b> from each other. Number two of them 1 and 2.</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>(From your teacher's solutions.) If two angles are vertical, then they are equal. <span class="g">Given:</span> Angles 1 and 2 are vertical. <span class="c">Conclusion:</span> m∠1 = m∠2.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> Linear pairs are supplementary <label class="done"><input type="checkbox" data-k="32-3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Draw a straight line with a ray coming up out of it. That makes two angles side by side. Label them 1 and 2. The Conclusion should be an equation with numbers.</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>If two angles form a linear pair, then they are supplementary. <span class="g">Given:</span> ∠1 and ∠2 form a linear pair. <span class="c">Conclusion:</span> ∠1 and ∠2 are supplementary (m∠1 + m∠2 = 180°).</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> The angles of a quadrilateral add to 360° <label class="done"><input type="checkbox" data-k="32-4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Just like the triangle example above, but with four corners. Name them A, B, C, D going around.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#5</span> Right triangles (the Pythagorean Theorem) <label class="done"><input type="checkbox" data-k="32-5"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Draw triangle ABC with the right angle at C. The <b>legs</b> are the two sides that touch the right angle (AC and BC). The <b>hypotenuse</b> is the long side across from it (AB). The Conclusion is an equation using AC, BC, and AB.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#6–7</span> Equal sides and equal angles <label class="done"><input type="checkbox" data-k="32-67"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>These two are converses of each other. In #6 the Given is about sides (AB = BC = CA), and the Conclusion is about angles. In #7 it is the other way around. Your diagram can be the same triangle ABC for both.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#8</span> Four right angles means equal diagonals <label class="done"><input type="checkbox" data-k="32-8"> Done</label></div>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>(From your teacher's solutions.) If a quadrilateral has four right angles, then it has equal diagonals. <span class="g">Given:</span> quadrilateral ABCD has four right angles. <span class="c">Prove:</span> AC = BD.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3.3 ============================ -->
+<section class="chap" id="s33">
+  <div class="chap-head">
+    <div class="chap-num">3.3</div>
+    <h2>Angle Proofs</h2>
+    <div class="links"><a href="https://youtu.be/TCqOqYZg-08" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/114oGV8LFx55YeCVdT8QyZUKVeg03azE1/view" target="_blank" rel="noopener">3.3 worksheet (PDF)</a><a href="https://drive.google.com/file/d/1RgU3KYyzHyv9jtYXu0j0-VVksh_DQiYi/view" target="_blank" rel="noopener">Teacher's selected proofs (PDF)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>A proof is a chain of small steps from the Given to the Conclusion. Every step needs a reason, and the only reasons allowed are: <b>Given</b>, a <b>definition</b>, a <b>postulate</b>, or a <b>theorem you already proved</b>.</div>
+
+  <div class="card">
+    <h4>The table (your teacher calls it a “table proof”)</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Column</th><th>What goes in it</th></tr></thead>
+      <tbody>
+        <tr><td><b>Statement</b></td><td>One small fact, written as words or as an equation.</td></tr>
+        <tr><td><b>From</b></td><td>The line number(s) this fact came from. Line 1 is the Given, so it has no “From.”</td></tr>
+        <tr><td><span class="r">Reason</span></td><td>The rule that lets you say it. For example “Def linear pair,” “LPT,” or “Substitution.”</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h4>The secret: most steps are translations</h4>
+    <p>Most lines in an angle proof turn <b>words into numbers</b> or <b>numbers back into words</b>. A definition lets you go either way. Learn this table and angle proofs get much easier.</p>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Words</th><th>↔ Numbers</th><th>Reason to write</th></tr></thead>
+      <tbody>
+        <tr><td>∠1 and ∠2 are supplementary</td><td>m∠1 + m∠2 = 180°</td><td class="r">Def supplementary</td></tr>
+        <tr><td>∠1 and ∠2 are complementary</td><td>m∠1 + m∠2 = 90°</td><td class="r">Def complementary</td></tr>
+        <tr><td>∠1 is right</td><td>m∠1 = 90°</td><td class="r">Def right angle</td></tr>
+        <tr><td>∠ABC is straight</td><td>m∠ABC = 180°</td><td class="r">Straight Angle Postulate</td></tr>
+        <tr><td>ray BP goes through the inside of ∠ABC</td><td>m∠ABP + m∠PBC = m∠ABC</td><td class="r">Angle Addition Postulate (AAP)</td></tr>
+        <tr><td>∠1 and ∠2 form a linear pair</td><td>(words) they are side by side and their outside rays make a line</td><td class="r">Def linear pair</td></tr>
+        <tr><td>∠1 and ∠2 form a linear pair</td><td>∠1 and ∠2 are supplementary</td><td class="r">LPT (once proved)</td></tr>
+      </tbody>
+    </table></div>
+    <p>And the algebra reasons: <span class="r">Substitution</span> (swap in something equal), <span class="r">Transitivity</span> (if a = b and b = c, then a = c), <span class="r">Addition</span>, <span class="r">Subtraction</span>, <span class="r">Multiplication</span>, <span class="r">Division</span> (do the same thing to both sides).</p>
+  </div>
+
+  <div class="figs">
+    <figure><svg viewBox="0 0 260 130" width="260" role="img" aria-label="Linear pair: angles BAC and CAD">
+      <line class="ln" x1="15" y1="105" x2="245" y2="105"/><line class="ln" x1="130" y1="105" x2="205" y2="20"/>
+      <path class="arc" d="M 100 105 A 30 30 0 0 1 149.8 82.5"/>
+      <path class="arc2" d="M 158 105 A 28 28 0 0 0 148.5 84"/>
+      <circle class="pt" cx="15" cy="105" r="3.5"/><circle class="pt" cx="130" cy="105" r="3.5"/><circle class="pt" cx="245" cy="105" r="3.5"/><circle class="pt" cx="205" cy="20" r="3.5"/>
+      <text x="10" y="125">B</text><text x="125" y="125">A</text><text x="240" y="125">D</text><text x="212" y="22">C</text>
+    </svg><figcaption>Linear pair: ∠BAC and ∠CAD share side AC, and their other sides (AB and AD) make a line.</figcaption></figure>
+    <figure><svg viewBox="0 0 240 150" width="240" role="img" aria-label="Vertical angles formed by two crossing lines">
+      <line class="ln" x1="20" y1="30" x2="220" y2="120"/><line class="ln" x1="20" y1="125" x2="220" y2="25"/>
+      <circle class="pt" cx="120" cy="75" r="3.5"/>
+      <text class="a" x="72" y="80">1</text><text class="b" x="114" y="45">2</text><text class="a" x="158" y="80">3</text><text class="b" x="114" y="112">4</text>
+    </svg><figcaption>Vertical angles are across from each other: 1 and 3 are vertical, 2 and 4 are vertical. Side-by-side angles, like 1 and 2, form a linear pair.</figcaption></figure>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Model proof 1 · from your teacher</div>
+    <h3>The Linear Pairs Theorem (LPT)</h3>
+    <p><span class="g">Given:</span> ∠BAC and ∠CAD form a linear pair &nbsp; <span class="c">Prove:</span> ∠BAC and ∠CAD are supplementary. (Use the linear pair picture above.)</p>
+    <div class="tbl-wrap"><table class="proof">
+      <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>∠BAC and ∠CAD form a linear pair<span class="say">Start with what you're told.</span></td><td></td><td>Given</td></tr>
+        <tr><td>2</td><td>rays AB and AD form a line<span class="say">Unpack the meaning of “linear pair.”</span></td><td>1</td><td>Def linear pair</td></tr>
+        <tr><td>3</td><td>∠BAD is straight<span class="say">An angle whose sides make a line is straight.</span></td><td>2</td><td>Def straight angle</td></tr>
+        <tr><td>4</td><td>m∠BAD = 180°<span class="say">Words to a number.</span></td><td>3</td><td>Straight Angle Postulate</td></tr>
+        <tr><td>5</td><td>ray AC passes through the interior of ∠BAD<span class="say">Also part of what “linear pair” means.</span></td><td>1</td><td>Def linear pair</td></tr>
+        <tr><td>6</td><td>m∠BAC + m∠CAD = m∠BAD<span class="say">The two small angles add up to the big one.</span></td><td>5</td><td>Angle Addition Postulate</td></tr>
+        <tr><td>7</td><td>m∠BAC + m∠CAD = 180°<span class="say">Both equal m∠BAD, so they equal each other.</span></td><td>4, 6</td><td>Transitivity</td></tr>
+        <tr><td>8</td><td>∠BAC and ∠CAD are supplementary<span class="say">A number back into words. Done!</span></td><td>7</td><td>Def supplementary</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Model proof 2 · using a theorem as a reason</div>
+    <h3>The T Theorem</h3>
+    <p><b>If two angles of equal measure form a linear pair, then each is right.</b> Picture a ray standing straight up from a line, like the letter T upside down.</p>
+    <p><span class="g">Given:</span> ∠1 and ∠2 form a linear pair, m∠1 = m∠2 &nbsp; <span class="c">Prove:</span> ∠1 and ∠2 are right</p>
+    <div class="tbl-wrap"><table class="proof">
+      <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>∠1 and ∠2 form a linear pair; m∠1 = m∠2</td><td></td><td>Given</td></tr>
+        <tr><td>2</td><td>∠1 and ∠2 are supplementary<span class="say">We already proved the LPT, so we can use it.</span></td><td>1</td><td>LPT</td></tr>
+        <tr><td>3</td><td>m∠1 + m∠2 = 180°</td><td>2</td><td>Def supplementary</td></tr>
+        <tr><td>4</td><td>m∠1 + m∠1 = 180°<span class="say">Replace m∠2 with m∠1, since they're equal.</span></td><td>1, 3</td><td>Substitution</td></tr>
+        <tr><td>5</td><td>2 · m∠1 = 180°</td><td>4</td><td>Distribution</td></tr>
+        <tr><td>6</td><td>m∠1 = 90°</td><td>5</td><td>Division</td></tr>
+        <tr><td>7</td><td>m∠2 = 90°</td><td>1, 6</td><td>Substitution</td></tr>
+        <tr><td>8</td><td>∠1 and ∠2 are right</td><td>6, 7</td><td>Def right angle</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="card">
+    <h4>A recipe when you're stuck</h4>
+    <ol class="steps">
+      <li>Write the Given as line 1.</li>
+      <li>Look at the Given and ask: <i>what does each word mean?</i> Write that down with “Def ___.”</li>
+      <li>Turn the words into equations (see the translation table).</li>
+      <li>Look at the <b>last</b> line you need (the Prove). What equation would give you that? Work toward it with algebra.</li>
+      <li>Turn the final equation back into words with a definition.</li>
+    </ol>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part I</div>
+    <div class="q"><div class="q-title"><span class="n">#1</span> Linear Pairs Theorem <label class="done"><input type="checkbox" data-k="33-1"> Done</label></div>
+      <p>This is Model proof 1 above. Close this page and try to write it from memory. It will be on the exam.</p>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#2</span> Converse LPT <label class="done"><input type="checkbox" data-k="33-2"> Done</label></div>
+      <p>This is the LPT run <b>backwards</b>. Given: adjacent ∠ACD and ∠BCD are supplementary. Prove: they form a linear pair.</p>
+      <details class="hint"><summary>Hint 1: the plan</summary><div><p>Supplementary → the two angles add to 180° → the big angle ∠ACB is 180° → so it's straight → so rays CA and CB make a line → so it's a linear pair.</p></div></details>
+      <details class="hint"><summary>Hint 2: the reasons, in order</summary><div><p>Given → Def supplementary → Angle Addition Postulate (m∠ACD + m∠BCD = m∠ACB) → Transitivity (m∠ACB = 180°) → Straight Angle Postulate (∠ACB is straight) → Def straight angle (rays CA and CB form a line) → Def linear pair.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> The T Theorem <label class="done"><input type="checkbox" data-k="33-3"> Done</label></div>
+      <p>This is Model proof 2 above. Try it from memory.</p>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> Complement Theorem <label class="done"><input type="checkbox" data-k="33-4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Copy the LPT proof, but the big angle is <b>right</b> (90°) instead of straight (180°). Reasons: Given → Def right angle (m∠BAC = 90°) → Angle Addition Postulate (m∠BAD + m∠DAC = m∠BAC) → Transitivity (= 90°) → Def complementary.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#5</span> Same Supplements Theorem (SST) <label class="done"><input type="checkbox" data-k="33-5"> Done</label></div>
+      <p>Given: ∠A and ∠B are each supplementary to ∠C. Prove: m∠A = m∠B.</p>
+      <details class="hint"><summary>Hint</summary><div><p>Write two equations: m∠A + m∠C = 180° and m∠B + m∠C = 180° (Def supplementary). Subtract m∠C from both sides of each (Subtraction). Now m∠A and m∠B both equal 180° − m∠C, so they equal each other (Transitivity).</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#6</span> Same Complements Theorem (SCT) <label class="done"><input type="checkbox" data-k="33-6"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Exactly the same as the SST, but with 90° instead of 180°. Write your own Given and Prove by copying the SST's and changing the word.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#7</span> Vertical Angles Theorem (VAT) <label class="done"><input type="checkbox" data-k="33-7"> Done</label></div>
+      <details class="hint"><summary>Hint 1</summary><div><p>Use the X picture above. You want to prove m∠1 = m∠3. Notice that ∠2 sits between them: ∠1 and ∠2 are a linear pair, and ∠2 and ∠3 are a linear pair.</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>Short proof: (1) ∠1 and ∠3 are vertical, Given. (2) ∠1, ∠2 form a linear pair and ∠2, ∠3 form a linear pair, Def linear pair. (3) ∠1 and ∠3 are both supplementary to ∠2, LPT. (4) m∠1 = m∠3, SST.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#8</span> Perpendicular Lines Theorem (PLT) <label class="done"><input type="checkbox" data-k="33-8"> Done</label></div>
+      <p>The definition of perpendicular only promises <b>one</b> right angle. You have to prove all four.</p>
+      <details class="hint"><summary>Hint</summary><div><p>∠1 and ∠2 are a linear pair (Def linear pair), so they're supplementary (LPT), so m∠1 + m∠2 = 180° (Def supplementary). m∠1 = 90° (Def right angle). Substitute: 90° + m∠2 = 180°. Subtract: m∠2 = 90°. So ∠2 is right. Then do the same trick to get from ∠2 to ∠3, and from ∠3 to ∠4.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#9</span> Rays PQ and PR form a line <label class="done"><input type="checkbox" data-k="33-9"> Done</label></div>
+      <details class="hint"><summary>Hint 1</summary><div><p>You want to show ∠2 and ∠3 form a linear pair. The Converse LPT (#2) does that if you can show they're supplementary.</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>∠1 and ∠2 form a linear pair, so m∠1 + m∠2 = 180°. Since m∠1 = m∠3, substitute to get m∠3 + m∠2 = 180°. So ∠2 and ∠3 are supplementary and adjacent → Converse LPT → linear pair → their outside rays PQ and PR form a line (Def linear pair).</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#10</span> Outside angles of triangle KLM add to 360° <label class="done"><input type="checkbox" data-k="33-10"> Done</label></div>
+      <details class="hint"><summary>Hint (your teacher's questions)</summary><div><p>What is the sum of the two angles in a linear pair? So what is the sum of all six angles in the three linear pairs? What is that total minus 180°?</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>Write m∠1 + m∠4 = 180°, m∠2 + m∠5 = 180°, m∠3 + m∠6 = 180° (LPT, Def supplementary). Add all three (Addition): the six angles total 540°. You're given m∠1 + m∠2 + m∠3 = 180°. Substitute and subtract 180° from both sides.</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part II</div>
+    <h3>D, P, or T?</h3>
+    <div class="card">
+      <ul class="plain">
+        <li><b>D (definition):</b> it just says what a word <i>means</i>. Look it up in the definitions list.</li>
+        <li><b>P (postulate):</b> something we agree is true without proving it. There are only a few. In this chapter the angle one is the Straight Angle Postulate.</li>
+        <li><b>T (theorem):</b> something we <i>proved</i>, like the LPT, VAT, T Theorem, and PLT.</li>
+      </ul>
+      <p>Your teacher's key warning: a true fact about a thing is <b>not</b> automatically its definition. “Vertical angles are equal” is true, but it's a <b>theorem</b> (the VAT). The definition of vertical angles only says what they look like.</p>
+      <p>Use the <a href="#cheat">Reasons list</a> below to check each one. Watch the trap in #11 and #12: <b>one</b> right angle is the definition of perpendicular. <b>Four</b> right angles is the theorem.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3.4 ============================ -->
+<section class="chap" id="s34">
+  <div class="chap-head">
+    <div class="chap-num">3.4</div>
+    <h2>Part–Whole Proofs</h2>
+    <div class="links"><a href="https://youtu.be/5FfvXPA-Gcs" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/10BrqdrbPwQZHafaSXzlGBx5ckQFYS594/view" target="_blank" rel="noopener">3.4 worksheet (PDF)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>The pieces add up to the whole. Write the “pieces add up” equation using the <b>Segment Addition Postulate</b> or the <b>Angle Addition Postulate</b>, then finish with ordinary algebra.</div>
+
+  <figure><svg viewBox="0 0 320 90" width="320" role="img" aria-label="Segment AB with point C between">
+    <line class="ln" x1="20" y1="45" x2="300" y2="45"/>
+    <circle class="pt" cx="20" cy="45" r="4"/><circle class="pt" cx="130" cy="45" r="4"/><circle class="pt" cx="300" cy="45" r="4"/>
+    <text x="14" y="30">A</text><text x="124" y="30">C</text><text x="294" y="30">B</text>
+    <path class="arc" d="M22 58 Q75 78 128 58"/><text class="a" x="62" y="86">AC</text>
+    <path class="arc2" d="M132 58 Q215 78 298 58"/><text class="b" x="205" y="86">CB</text>
+  </svg><figcaption>Segment Addition Postulate (SAP): if C is between A and B, then AC + CB = AB.</figcaption></figure>
+
+  <div class="card">
+    <h4>Words you'll need</h4>
+    <ul class="plain">
+      <li><b>Midpoint:</b> C is the midpoint of AB when C is between A and B and AC = CB. (Reason: <span class="r">Def midpoint</span>.)</li>
+      <li><b>Bisects:</b> ray BD bisects ∠ABC when it goes through the inside and splits it into two equal angles. (Reason: <span class="r">Def angle bisector</span>.)</li>
+      <li><b>Greater than:</b> p &gt; q when p = q + t for some <b>positive</b> t. Example: 12 &gt; 7 because 12 = 7 + 5. (Reason: <span class="r">Def greater than</span>.)</li>
+      <li><b>Less than:</b> p &lt; q when p = q − t for some positive t.</li>
+      <li><b>Every length and every angle measure is positive.</b> (Reason: <span class="r">Ruler Postulate</span> for lengths, <span class="r">Protractor Postulate</span> for angles.)</li>
+    </ul>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Model proof · from class</div>
+    <h3>The Halfway Theorem</h3>
+    <p><span class="g">Given:</span> C is the midpoint of segment AB &nbsp; <span class="c">Prove:</span> AC = ½AB and BC = ½AB</p>
+    <div class="tbl-wrap"><table class="proof">
+      <thead><tr><th>#</th><th>Statement</th><th>From</th><th>Reason</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>C is the midpoint of AB</td><td></td><td>Given</td></tr>
+        <tr><td>2</td><td>AC = BC</td><td>1</td><td>Def midpoint</td></tr>
+        <tr><td>3</td><td>C lies between A and B</td><td>1</td><td>Def midpoint</td></tr>
+        <tr><td>4</td><td>AC + BC = AB<span class="say">Pieces add up to the whole.</span></td><td>3</td><td>SAP</td></tr>
+        <tr><td>5</td><td>AC + AC = AB<span class="say">Swap BC for AC, since they're equal.</span></td><td>2, 4</td><td>Substitution</td></tr>
+        <tr><td>6</td><td>2 · AC = AB</td><td>5</td><td>Distribution</td></tr>
+        <tr><td>7</td><td>AC = ½AB</td><td>6</td><td>Division</td></tr>
+        <tr><td>8</td><td>BC = ½AB</td><td>2, 7</td><td>Substitution</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part I · core results</div>
+    <div class="q"><div class="q-title"><span class="n">#1</span> Halfway Theorem <label class="done"><input type="checkbox" data-k="34-1"> Done</label></div>
+      <p>This is the model proof above. Practice it from memory.</p>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#2</span> Equal Wholes, Equal Halves (EWEH) <label class="done"><input type="checkbox" data-k="34-2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Use the Halfway Theorem twice: AC = ½AB and DF = ½DE. You're given AB = DE, so multiply both sides by ½ (Multiplication): ½AB = ½DE. Then chain them together with Substitution or Transitivity to get AC = DF.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> Many Parts Theorem (MPT) <label class="done"><input type="checkbox" data-k="34-3"> Done</label></div>
+      <p>Picture A — C — D — B on one segment.</p>
+      <details class="hint"><summary>Hint</summary><div><p>Use the SAP twice. First on the small piece: AC + CD = AD. Then on the big piece: AD + DB = AB. Substitute the first into the second: AC + CD + DB = AB.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> Equal Parts, Equal Wholes (EPEW) <label class="done"><input type="checkbox" data-k="34-4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>SAP on each segment: AE + EB = AB and CF + FD = CD. Since AE = CF and EB = FD, substitute into the first equation to get CF + FD = AB. Now AB and CD both equal CF + FD, so AB = CD (Transitivity).</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#5</span> Whole Minus Part (WMP) <label class="done"><input type="checkbox" data-k="34-5"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>SAP on each: AE + EB = AB and CF + FD = CD. Subtract to get each missing piece alone: EB = AB − AE and FD = CD − CF. Since AB = CD and AE = CF, substitute so both right sides match. Then EB = FD.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#6</span> Whole &gt; Part <label class="done"><input type="checkbox" data-k="34-6"> Done</label></div>
+      <p>You make the diagram and the Given/Prove yourself. Use the A — C — B picture above.</p>
+      <details class="hint"><summary>Hint 1</summary><div><p>Given: C is between A and B. Prove: AB &gt; AC and AB &gt; CB.</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>SAP gives AB = AC + CB. CB is a length, so it's positive (Ruler Postulate). That's exactly the pattern “p = q + (something positive),” so AB &gt; AC by Def greater than. Do the same for CB.</p></div></details>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Worksheet Part II · just read these two</h4>
+    <p><b>Linear Tuples Theorem (LTT):</b> any number of side-by-side angles that make a straight line add up to 180°.</p>
+    <p><b>Full Circle Theorem (FCT):</b> any number of side-by-side angles that go all the way around a point add up to 360°.</p>
+    <p>You don't prove these, but you <b>will</b> use them as reasons.</p>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part III · applications</div>
+    <div class="q"><div class="q-title"><span class="n">#1</span> AD = ¼AB <label class="done"><input type="checkbox" data-k="34-III1"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Use the Halfway Theorem twice. D is the midpoint of AC, so AD = ½AC. C is the midpoint of AB, so AC = ½AB. Substitute the second into the first.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#2</span> AC = BD <label class="done"><input type="checkbox" data-k="34-III2"> Done</label></div>
+      <details class="hint"><summary>Hint (your teacher's statements)</summary><div><p>AB + BC = AC; BC + CD = BD; BC + AB = BD; AC = BD. Your job is to write the From and Reason for each one. Hint: the third line uses the Given AB = CD.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> If m∠1 &lt; 90°, then m∠2 &gt; 90° <label class="done"><input type="checkbox" data-k="34-III3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Linear pair → m∠1 + m∠2 = 180°. “Less than 90” means m∠1 = 90° − t for some positive t (Def less than). Substitute: 90° − t + m∠2 = 180°. Solve for m∠2: m∠2 = 90° + t. That's Def greater than!</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> m∠3 = m∠4 <label class="done"><input type="checkbox" data-k="34-III4"> Done</label></div>
+      <details class="hint"><summary>Hint (your teacher's statements)</summary><div><p>∠1, ∠3 a linear pair; ∠2, ∠4 a linear pair; m∠1 + m∠3 = 180°; m∠2 + m∠4 = 180°; m∠1 + m∠3 = m∠2 + m∠4; subtract the equal angles m∠1 and m∠2 from both sides; m∠3 = m∠4. Fill in the reasons.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#5</span> Bisectors of a linear pair make a right angle <label class="done"><input type="checkbox" data-k="34-III5"> Done</label></div>
+      <details class="hint"><summary>Hint 1</summary><div><p>Big picture: the two whole angles add to 180°. Each bisector cuts its angle in half. Half of 180° is 90°.</p></div></details>
+      <details class="hint"><summary>Hint 2</summary><div><p>m∠BAD + m∠DAF = 180° (LPT, Def supplementary). m∠CAD = ½m∠BAD and m∠DAE = ½m∠DAF (Halfway Theorem, angle version). m∠CAE = m∠CAD + m∠DAE (AAP). Substitute the halves, factor out ½, and use 180°. So m∠CAE = 90° and it's right (Def right angle).</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#6</span> Four equal angles means perpendicular <label class="done"><input type="checkbox" data-k="34-III6"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Your teacher started it: m∠1 + m∠2 + m∠3 + m∠4 = 360° (FCT). Substitute so every angle is ∠1: 4 · m∠1 = 360°. Divide, then use Def right angle and Def perpendicular lines.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#7</span> Converse VAT <label class="done"><input type="checkbox" data-k="34-III7"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Call the four angles around Z: a, b, a, b (opposite ones are equal). FCT: a + b + a + b = 360°, so 2a + 2b = 360°, so a + b = 180°. Two side-by-side angles adding to 180° → Converse LPT → linear pair → the outside rays form a line (Def linear pair). Repeat for the other pair of rays.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3.5 ============================ -->
+<section class="chap" id="s35">
+  <div class="chap-head">
+    <div class="chap-num">3.5</div>
+    <h2>Indirect Proof</h2>
+    <div class="links"><a href="https://youtu.be/eQBYW2AJaTA" target="_blank" rel="noopener">Class lecture video</a><a href="https://drive.google.com/file/d/1BECoEnZK8AwswBDZPx65KBOKhJycwN66/view" target="_blank" rel="noopener">3.5 worksheet (PDF)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>Pretend the <b>opposite</b> of what you want is true. Show that this leads to something impossible. So the opposite must be false, and what you wanted is true.</div>
+
+  <div class="card">
+    <h4>Think of a detective</h4>
+    <p>“Suppose the butler did it. Then he was in the kitchen at 9pm. But the butler was on camera at the train station at 9pm. That's impossible. So the butler didn't do it.”</p>
+    <p>That's an indirect proof. The detective assumed the opposite, found a contradiction, and threw the assumption away.</p>
+  </div>
+
+  <div class="flow">
+    <div><b>Given</b>What you're told.</div>
+    <div><b>Prove</b>What you want.</div>
+    <div><b>Assumption</b>The <i>opposite</i> of Prove.</div>
+    <div><b>Reduction</b>Reason step by step until something clashes with a fact you know.</div>
+    <div><b>Conclusion</b>“So the Assumption is false,” and restate the Prove.</div>
+  </div>
+
+  <div class="card">
+    <h4>Worked example · from class</h4>
+    <p><span class="g">Given:</span> ∠A and ∠B are supplementary.<br>
+    <span class="c">Prove:</span> Not both ∠A and ∠B are obtuse.<br>
+    <b>Assumption:</b> Both ∠A and ∠B are obtuse.<br>
+    <b>Reduction:</b> Obtuse angles measure more than 90°. So m∠A + m∠B is more than 180°. But the Given says they're supplementary, so their sum is exactly 180°. That's a contradiction.<br>
+    <b>Conclusion:</b> The Assumption is false. Not both ∠A and ∠B are obtuse.</p>
+    <p>Notice the Reduction is written in sentences, not a table. That's called a <b>paragraph proof</b>. You still give a reason for each step.</p>
+  </div>
+
+  <div class="card">
+    <h4>Getting the Assumption right: how to say the opposite</h4>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Prove says…</th><th>Assumption says…</th></tr></thead>
+      <tbody>
+        <tr><td>n is odd</td><td>n is even (not odd)</td></tr>
+        <tr><td>Both are acute</td><td>At least one is not acute</td></tr>
+        <tr><td>Not both are obtuse</td><td>Both are obtuse</td></tr>
+        <tr><td>Neither one is straight</td><td>At least one is straight</td></tr>
+        <tr><td>They meet in at most one point</td><td>They meet in two or more points</td></tr>
+        <tr><td>X went first</td><td>X did not go first</td></tr>
+      </tbody>
+    </table></div>
+    <p>Where can the contradiction come from? The Given, a definition, a postulate, or a theorem. Say which one: “This contradicts the Given.”</p>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part I · fill in the blanks</div>
+    <div class="q"><div class="q-title"><span class="n">#1–2</span> Sherlock; sum of p and q <label class="done"><input type="checkbox" data-k="35-I12"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>#1: the last blank is the Conclusion, which is the opposite of the Assumption. #2: odd + odd = even. Work through the blanks in order.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> Supplementary angles, neither straight <label class="done"><input type="checkbox" data-k="35-I3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>A straight angle is 180° by itself. Add any positive angle to it and the total is more than 180°. Which fact did you start with that says the total is exactly 180°?</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> Tic-tac-toe <label class="done"><input type="checkbox" data-k="35-I4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: X did not go first. Then O went first. Count the marks: there are two X's and two O's. If O went first, whose turn is it now? Look at the board from that player's side: can they force a win from here? If someone is going to lose, that player must have made a mistake. But nobody makes mistakes. That's your contradiction.</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part II · on your own</div>
+    <div class="q"><div class="q-title"><span class="n">#1</span> Blood types <label class="done"><input type="checkbox" data-k="35-II1"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: F has type AB. W is type O. Use the rule: an O parent and an AB parent have a child who is type A or type B. What type is C? Does that clash with the Given?</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#2</span> Complementary angles are both acute <label class="done"><input type="checkbox" data-k="35-II2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: at least one of them is <b>not</b> acute. Say it's ∠A. Then m∠A is 90° or more. m∠B is positive. So the sum is more than 90°. That clashes with the Given. (Your teacher's solutions work through this one in full.)</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> If n² is even, then n is even <label class="done"><input type="checkbox" data-k="35-II3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: n is odd. Then n² = n × n is odd × odd. What kind of number is that? Compare with the Given.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> Path B–Z–D is not straight <label class="done"><input type="checkbox" data-k="35-II4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: B–Z–D <i>is</i> straight. Then A–Z–C and B–Z–D are two lines crossing at Z. So ∠AZD and ∠BZC are vertical angles. What does the VAT say about them? Does that clash with the Given?</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part III · official theorem</div>
+    <div class="q"><div class="q-title"><span class="n">#1</span> Two lines can't meet in more than one point <label class="done"><input type="checkbox" data-k="35-III1"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>The Assumption says lines a and b both go through P <b>and</b> Q. Now read the <b>Line Existence Postulate</b>: through two points there is exactly <b>one</b> line. So how many lines go through P and Q? What does that say about a and b being two different lines?</p></div></details>
+    </div>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Worksheet Part IV · the Fred puzzles</div>
+    <p>Your teacher did #1. For each of the others, follow the same shape. Read the word <b>only</b> carefully: “Fred shaves only people who don't shave themselves” means <i>if Fred shaves you, then you don't shave yourself.</i></p>
+    <div class="q"><div class="q-title"><span class="n">#2</span> Fred does not shave himself <label class="done"><input type="checkbox" data-k="35-IV2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: Fred shaves himself. Fred lives in Muncie, so he's one of the people Fred shaves. By the “only” rule, that person doesn't shave himself. Contradiction!</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#3</span> Fred does not live in Muncie <label class="done"><input type="checkbox" data-k="35-IV3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Assumption: Fred lives in Muncie. Then either Fred shaves himself or he doesn't. Check both cases. If he does, the “only” rule says he doesn't (like #2). If he doesn't, the “all” rule says he does (like #1). Either way you get a contradiction.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">#4</span> Fred does not exist <label class="done"><input type="checkbox" data-k="35-IV4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Same as #3, but now the rule covers everyone in the world. If Fred existed, he'd have to live somewhere in the world, and the same two cases break.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ 3.6 ============================ -->
+<section class="chap" id="s36">
+  <div class="chap-head">
+    <div class="chap-num">3.6</div>
+    <h2>Two Truths and a Lie</h2>
+    <div class="links"><a href="https://drive.google.com/file/d/12-C-3XPCTATTMjHMm7Aj3K_c7EiL7gIC/view" target="_blank" rel="noopener">3.6 worksheet (PDF)</a><a href="https://www.geogebra.org/geometry" target="_blank" rel="noopener">GeoGebra Geometry (free)</a></div>
+  </div>
+
+  <div class="big"><span class="tag">Big idea</span>This is counterexample hunting (from 3.1) with a computer. Build the <b>Given</b> in GeoGebra so it can't break, then drag points around until the <b>Conclusion</b> fails. That picture is your counterexample.</div>
+
+  <div class="card">
+    <h4>Step by step for each statement</h4>
+    <ol class="steps">
+      <li>Find the Given (after “if”) and the Conclusion (after “then”).</li>
+      <li>Build the Given in GeoGebra using the <b>tools</b>, not by eye. If two sides must be equal, use a circle so they <i>stay</i> equal when you drag. If a ray must bisect, use the Angle Bisector tool.</li>
+      <li>Use the Distance/Length and Angle tools to show the numbers the Conclusion talks about.</li>
+      <li>Drag points around. Watch the numbers.</li>
+      <li>If the Conclusion stays true no matter what, it's probably one of the truths. If you can make it false even once, you found the lie. Screenshot it.</li>
+    </ol>
+  </div>
+
+  <div class="card">
+    <h4>Building useful shapes in GeoGebra</h4>
+    <ul class="plain">
+      <li><b>Triangle with AB = BC:</b> put point B, draw a circle centered at B through A, then put C anywhere <i>on the circle</i>. Now BA = BC no matter how you drag.</li>
+      <li><b>Two triangles with a matching side:</b> draw segment AB, then use “Segment with Given Length” to make RS the same length.</li>
+      <li><b>Matching angle:</b> use the “Angle with Given Size” tool to copy an angle's measure.</li>
+      <li><b>Right triangle:</b> draw a segment, then “Perpendicular Line” through one endpoint, and put the third corner on that line.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>What does “congruent” mean?</h4>
+    <p>Two shapes are congruent when they are exact copies: every side and every angle matches its partner. For triangles ABC and RST that means AB = RS, BC = ST, AC = RT, and m∠A = m∠R, m∠B = m∠S, m∠C = m∠T.</p>
+    <p>To show a “congruent” statement is a lie, make two shapes that fit the Given but are <b>clearly different sizes or shapes</b>.</p>
+  </div>
+
+  <div class="part">
+    <div class="part-label">Hints for each set</div>
+    <div class="q"><div class="q-title"><span class="n">Set 1</span> Triangle with AB = BC <label class="done"><input type="checkbox" data-k="36-1"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Build it with the circle trick above. Add the bisectors of ∠A and ∠C (the segment from each corner to the opposite side). Measure everything the three statements mention, then drag C around the circle.</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>The lie is <b>B</b>. The bisector of ∠A is only perpendicular to BC in the special case where all three sides are equal. Drag until the triangle is tall and thin, and the angle is clearly not 90°.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">Set 2</span> Triangles ABC and RST <label class="done"><input type="checkbox" data-k="36-2"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>For each statement, look at <b>where the matching angle sits</b>. Is it squeezed between the two matching sides, or off to one side? Build the one where the angle is <i>not</i> between the two sides and see if the third side can take two different lengths.</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>The lie is <b>C</b>. With ∠A, side AB, and side BC, the angle is not between the two sides. Draw a circle for BC around B: it can hit the other side of ∠A in two places, giving two different triangles.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">Set 3</span> Quadrilaterals ABCD and RSTU <label class="done"><input type="checkbox" data-k="36-3"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>One statement gives only <b>one</b> side plus angles. Think about a rectangle: all its angles are 90°. Can two rectangles have the same AB but different shapes?</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>The lie is <b>C</b>. Counterexample: two rectangles with the same side AB but different heights. All four angles match (90° each) and AB matches, but they are not congruent.</p></div></details>
+    </div>
+    <div class="q"><div class="q-title"><span class="n">Set 4</span> Triangle congruence shortcuts <label class="done"><input type="checkbox" data-k="36-4"> Done</label></div>
+      <details class="hint"><summary>Hint</summary><div><p>Can two triangles have the same shape but a different size?</p></div></details>
+      <details class="hint answer"><summary>Check your answer</summary><div><p>The lie is <b>A</b>. A small triangle and a bigger copy of it (like 3-4-5 and 6-8-10) have all the same angles but are not congruent.</p></div></details>
+    </div>
+  </div>
+
+  <div class="card">
+    <h4>Bonus slides in 3.6: two famous indirect proofs</h4>
+    <p><b>There are infinitely many primes (Euclid).</b> Assume there's a last prime. Multiply every prime together and add 1. Call it S. S is bigger than every prime, so it isn't prime. Dividing S by any prime leaves remainder 1, so it isn't composite either. But every whole number 2 or bigger is prime or composite. Contradiction, so the primes never run out.</p>
+    <p><b>√2 is irrational (Pythagoras).</b> Assume √2 = a/b, a fraction in lowest terms. Squaring gives a² = 2b², so a² is even, so a is even. Write a = 2k. Then 4k² = 2b², so b² = 2k², so b is even too. But then a/b wasn't in lowest terms. Contradiction.</p>
+  </div>
+</section>
+
+<!-- ============================ Cheat sheet ============================ -->
+<section class="chap" id="cheat">
+  <div class="chap-head">
+    <div class="chap-num">★</div>
+    <h2>Reasons list for Chapter 3</h2>
+    <p class="lede">These are the things you're allowed to write in the <span class="r">Reason</span> column. The wording comes from your class's official lists. Theorems are listed in the order they're proven, and you can only use a theorem after it has been proven.</p>
+  </div>
+  <div class="cheat">
+    <div class="card"><h4>Definitions</h4><dl>
+      <dt><span class="kind k-d">Def</span>Midpoint</dt><dd>C is between A and B, and AC = CB.</dd>
+      <dt><span class="kind k-d">Def</span>Angle bisector</dt><dd>A ray through the inside of an angle that splits it into two equal angles.</dd>
+      <dt><span class="kind k-d">Def</span>Right angle</dt><dd>Measures 90°.</dd>
+      <dt><span class="kind k-d">Def</span>Straight angle</dt><dd>Its two sides form a line. (The definition does <i>not</i> say 180°. That's a postulate.)</dd>
+      <dt><span class="kind k-d">Def</span>Acute / Obtuse</dt><dd>Acute: less than 90°. Obtuse: more than 90° and less than 180°.</dd>
+      <dt><span class="kind k-d">Def</span>Adjacent angles</dt><dd>Share a side, and their insides don't overlap.</dd>
+      <dt><span class="kind k-d">Def</span>Linear pair</dt><dd>Adjacent angles whose non-shared sides form a line.</dd>
+      <dt><span class="kind k-d">Def</span>Vertical angles</dt><dd>Opposite angles formed when two lines cross.</dd>
+      <dt><span class="kind k-d">Def</span>Complementary / Supplementary</dt><dd>Measures add to 90° / add to 180°. The angles don't have to touch.</dd>
+      <dt><span class="kind k-d">Def</span>Perpendicular lines</dt><dd>Two lines that form <b>a</b> right angle (just one!).</dd>
+      <dt><span class="kind k-d">Def</span>Greater than / Less than</dt><dd>p &gt; q when p = q + t, and p &lt; q when p = q − t, for some positive t.</dd>
+    </dl></div>
+    <div class="card"><h4>Postulates</h4><dl>
+      <dt><span class="kind k-p">Post</span>Line Existence Postulate</dt><dd>Through any two points there is exactly one line.</dd>
+      <dt><span class="kind k-p">Post</span>Ruler Postulate</dt><dd>Every segment has a positive length.</dd>
+      <dt><span class="kind k-p">Post</span>Segment Addition Postulate (SAP)</dt><dd>If C is between A and B, then AC + CB = AB.</dd>
+      <dt><span class="kind k-p">Post</span>Protractor Postulate</dt><dd>Every angle has a positive measure.</dd>
+      <dt><span class="kind k-p">Post</span>Angle Addition Postulate (AAP)</dt><dd>If ray BP goes through the inside of ∠ABC, then m∠ABP + m∠PBC = m∠ABC.</dd>
+      <dt><span class="kind k-p">Post</span>Straight Angle Postulate</dt><dd>Straight angles measure 180°, and angles that measure 180° are straight.</dd>
+      <dt><span class="kind k-p">Post</span>Algebra</dt><dd>Reflexivity, Transitivity, Substitution, Addition, Subtraction, Multiplication, Division, Distribution.</dd>
+    </dl></div>
+    <div class="card"><h4>Theorems, in order</h4><dl>
+      <dt><span class="kind k-t">3.1</span>Linear Pairs Theorem (LPT)</dt><dd>Linear pairs are supplementary.</dd>
+      <dt><span class="kind k-t">3.2</span>Converse LPT</dt><dd>Adjacent + supplementary → linear pair.</dd>
+      <dt><span class="kind k-t">3.3</span>T Theorem</dt><dd>Equal angles in a linear pair are both right.</dd>
+      <dt><span class="kind k-t">3.4</span>Complement Theorem</dt><dd>Adjacent angles whose outer sides make a right angle are complementary.</dd>
+      <dt><span class="kind k-t">3.5–3.6</span>SCT / SST</dt><dd>Two angles complementary (or supplementary) to the same angle are equal.</dd>
+      <dt><span class="kind k-t">3.7</span>Vertical Angles Theorem (VAT)</dt><dd>Vertical angles are equal.</dd>
+      <dt><span class="kind k-t">3.8</span>Perpendicular Lines Theorem (PLT)</dt><dd>Perpendicular lines form four right angles.</dd>
+      <dt><span class="kind k-t">3.12</span>Halfway Theorem</dt><dd>A midpoint makes each half ½ the whole. The same goes for an angle bisector.</dd>
+      <dt><span class="kind k-t">3.13</span>EWEH</dt><dd>Halves of equals are equal.</dd>
+      <dt><span class="kind k-t">3.14</span>Many Parts Theorem (MPT)</dt><dd>The whole is the sum of all its parts.</dd>
+      <dt><span class="kind k-t">3.15</span>EPEW</dt><dd>Equal parts make equal wholes.</dd>
+      <dt><span class="kind k-t">3.16</span>Whole Minus Part (WMP)</dt><dd>Equal wholes minus equal parts leave equal parts.</dd>
+      <dt><span class="kind k-t">3.17</span>Whole &gt; Part</dt><dd>The whole is bigger than any of its parts.</dd>
+      <dt><span class="kind k-t">3.18</span>Full Circle Theorem (FCT)</dt><dd>Angles all the way around a point add to 360°.</dd>
+      <dt><span class="kind k-t">3.19</span>Line/Line Intersection</dt><dd>Two lines can't meet in more than one point.</dd>
+      <dt><span class="kind k-t">3.20</span>Converse VAT</dt><dd>Four rays with equal opposite angles form two lines.</dd>
+    </dl></div>
+  </div>
+</section>
+
+<footer>Made to go with the Think Logical! Chapter 3 materials at thinklogical.net. Answers marked “from your teacher's solutions” come from the class's own solution sheets. When this page and your teacher disagree, go with your teacher.</footer>
+</div>
+
+<script>
+(function(){
+  var boxes = document.querySelectorAll('input[data-k]');
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem('ch3-done') || '{}') || {}; } catch(e) { saved = {}; }
+  boxes.forEach(function(b){
+    if (saved[b.dataset.k]) b.checked = true;
+    b.addEventListener('change', function(){
+      saved[b.dataset.k] = b.checked;
+      try { localStorage.setItem('ch3-done', JSON.stringify(saved)); } catch(e) {}
+    });
+  });
+})();
+</script>
+</body>
+</html>
